@@ -11,7 +11,7 @@
 Antes de comenzar con el proyecto, asegúrate de tener instalado lo siguiente:
 
 - **NodeJS** (Versión 18 o superior)
-  - Descarga e instala desde [nodejs.org](https://nodejs.org/en/).
+  - Descarga e instala desde [nodejs.org]([https://nodejs.org/en/](https://nodejs.org/en/download/current)).
 
 - **pnpm**
   - Instálalo globalmente con `npm install -g pnpm`.
