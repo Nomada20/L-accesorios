@@ -32,6 +32,12 @@
 
   pnpm astro add tailwind
 
+- Implementar Supabase
+
+  Supabase
+
+  pnpm add @supabase/supabase-js
+
 ## Comandos utiles
 
 - Instalar dependencias luego de clonar el proyecto
