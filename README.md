@@ -22,7 +22,7 @@ Estas son las dependencias necesarias que serán instaladas dentro del proyecto:
 
 - **Framework: Astro (V4.8.0)**
 
-  pnpm create astro@4.8.0
+  `pnpm create astro@4.8.0`
 
 - **Extension de Astro en Visual Studio Code**
   
@@ -30,15 +30,15 @@ Estas son las dependencias necesarias que serán instaladas dentro del proyecto:
 
 - **React**
 
-  pnpm astro add react
+  `pnpm astro add react`
 
 - **Tailwind CSS**
   
-  pnpm astro add tailwind
+  `pnpm astro add tailwind`
 
 - **Supabase**
 
-  pnpm add @supabase/supabase-js
+  `pnpm add @supabase/supabase-js`
 
 ## Comandos útiles
 
@@ -52,7 +52,7 @@ A continuación, algunos comandos útiles para trabajar con el proyecto:
   Este comando instalará todas las dependencias descritas en el archivo `package.json`. Si no lo haces, podrías experimentar problemas con el proyecto.
 
 - **Iniciar proyecto en modo desarrollador**
-
+  ```
   pnpm astro dev
-
+  ```
 Este comando inicia el proyecto en modo desarrollador, permitiéndote visualizar la página y realizar cambios en tiempo real.
