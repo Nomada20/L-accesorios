@@ -34,6 +34,14 @@
 
 ## Comandos utiles
 
+- Instalar dependencias luego de clonar el proyecto
+
+  Luego de clonar el proyecto, en un CMD del proyecto deben ejecutar la siguiente linea de codigo
+
+  pnpm install
+
+  Con esa linea de codigo se les instalaran todas las dependencias descritas arriba (ya que estan almacenadas en el archivo package.json), si no hacen esto e instalan todo manualmente denuevo lo mas probable es que se piteen el proyecto y lo mas probable es que el   señor Cristobal Aravena haga eso y se lo pitee, obviamente va a leer esto, porque les pedire que lean todo el readme, asi que, Cristobal gay. 
+
 - Iniciar proyecto (Modo desarrollador para ver la pagina)
 
   pnpm astro dev
