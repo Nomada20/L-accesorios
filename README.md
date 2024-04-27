@@ -40,6 +40,10 @@ Estas son las dependencias necesarias que serán instaladas dentro del proyecto:
 
   `pnpm add @supabase/supabase-js`
 
+- **Vercel** Adaptador de renderizado
+  
+  `pnpm astro add vercel`
+
 ## Comandos útiles
 
 A continuación, algunos comandos útiles para trabajar con el proyecto:
