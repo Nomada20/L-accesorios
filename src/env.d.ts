@@ -1,1 +1,11 @@
-/// <reference types="astro/client" />     
+/// <reference types="astro/client" />
+
+interface ImportMetaEnv {
+  readonly SUPABASE_URL: string;
+  readonly SUPABASE_KEY: string;
+}
+
+interface ImportMetaEnv {
+  readonly env: ImportMetaEnv;
+}
+
