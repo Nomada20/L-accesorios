@@ -8,4 +8,3 @@ interface ImportMetaEnv {
 interface ImportMetaEnv {
   readonly env: ImportMetaEnv;
 }
-

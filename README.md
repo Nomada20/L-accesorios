@@ -1,53 +1,62 @@
-# Requisitos previos (Ejecutar / Instalar fuera del proyecto / CMD externo)
+# Proyecto Astro React con Tailwind CSS y Supabase
 
-- NodeJS (Version 18 o mas)
+## Índice
+
+- [Requisitos previos](#requisitos-previos)
+- [Dependencias utilizadas para el proyecto](#dependencias-utilizadas-para-el-proyecto)
+- [Comandos útiles](#comandos-útiles)
+
+## Requisitos previos
+
+Antes de comenzar con el proyecto, asegúrate de tener instalado lo siguiente:
+
+- **NodeJS** (Versión 18 o superior)
+  - Descarga e instala desde (https://nodejs.org/en/download/current)).
+
+- **pnpm**
+  - Instálalo globalmente con `npm install -g pnpm`.
+
+## Dependencias utilizadas para el proyecto
+
+Estas son las dependencias necesarias que serán instaladas dentro del proyecto:
+
+- **Framework: Astro (V4.8.0)**
+
+  `pnpm create astro@4.8.0`
+
+- **Extension de Astro en Visual Studio Code**
   
-  https://nodejs.org/en/
+  Busca e instala "Astro" en las extensiones de Visual Studio Code, que mas voy a explicar xdd
 
-- pnpm
+- **React**
 
-  npm install -g pnpm
+  `pnpm astro add react`
 
-# Dependencias utilizadas para el proyecto (Instaladas dentro del proyecto / CMD interno)
+- **Tailwind CSS**
+  
+  `pnpm astro add tailwind`
 
-- Framework
+- **Supabase**
 
-  Astro (V4.8.0)
+  `pnpm add @supabase/supabase-js`
 
-  pnpm create astro@4.8.0
+- **Vercel** Adaptador de renderizado
+  
+  `pnpm astro add vercel`
 
-- Instalar extension de Astro en Visual Studio Code
+## Comandos útiles
 
-  Vayan a extensiones y buscan Astro xD
+A continuación, algunos comandos útiles para trabajar con el proyecto:
 
-- Implementar React
-
-  React
-
-  pnpm astro add react
-
-- Implementar Tailwind CSS
-
-  Tailwind CSS
-
-  pnpm astro add tailwind
-
-- Implementar Supabase
-
-  Supabase
-
-  pnpm add @supabase/supabase-js
-
-## Comandos utiles
-
-- Instalar dependencias luego de clonar el proyecto
-
-  Luego de clonar el proyecto, en un CMD del proyecto deben ejecutar la siguiente linea de codigo
-
+- **Instalar dependencias**
+- Después de clonar el proyecto, ejecuta:
+  ```
   pnpm install
+  ```
+  Este comando instalará todas las dependencias descritas en el archivo `package.json`. Si no lo haces, podrías experimentar problemas con el proyecto.
 
-  Con esa linea de codigo se les instalaran todas las dependencias descritas arriba (ya que estan almacenadas en el archivo package.json), si no hacen esto e instalan todo manualmente denuevo lo mas probable es que se piteen el proyecto y lo mas probable es que el   señor Cristobal Aravena haga eso y se lo pitee, obviamente va a leer esto, porque les pedire que lean todo el readme, asi que, Cristobal gay. 
-
-- Iniciar proyecto (Modo desarrollador para ver la pagina)
-
+- **Iniciar proyecto en modo desarrollador**
+  ```
   pnpm astro dev
+  ```
+Este comando inicia el proyecto en modo desarrollador, permitiéndote visualizar la página y realizar cambios en tiempo real.
