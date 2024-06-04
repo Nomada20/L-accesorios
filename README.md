@@ -44,6 +44,10 @@ Estas son las dependencias necesarias que serán instaladas dentro del proyecto:
   
   `pnpm astro add vercel`
 
+- **FireBase**
+
+  `pnpm add firebase firebase-admin`
+
 ## Comandos útiles
 
 A continuación, algunos comandos útiles para trabajar con el proyecto:
