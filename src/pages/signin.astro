@@ -21,7 +21,7 @@ if (accessToken && refreshToken) {
           <form action="/api/auth/signin" method="post" >
             <div class="mb-12">
               <h3 class="text-3xl font-extrabold">Iniciar sesión</h3>
-              <p class="text-sm mt-4 ">No tienes cuenta <a href="/register" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Registrate aquí</a></p>
+              <p class="text-sm mt-4 ">No tienes cuenta? <a href="/register" class="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap">Registrate aquí</a></p>
             </div>
             <div>
               <label for="email" class="text-xs block mb-2">Correo electrónico</label>
@@ -119,6 +119,10 @@ if (accessToken && refreshToken) {
       -moz-box-shadow: 0px 0px 200px -62px rgba(255,255,255,1);
       box-shadow: 0px 0px 200px -62px rgba(255,255,255,1);
     }
+  
+
+    .login{animation:slide-top 1.5s linear both}
+    @keyframes slide-top{0%{transform:translateY(500px)}100%{transform:translateY(0px)}}
  </style>
 
 
