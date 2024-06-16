@@ -7,27 +7,36 @@ const { cookies, redirect } = Astro;
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
 
-if (!accessToken || !refreshToken) {
-  return redirect("/signin");
-}
+async function handleAuth() {
+  if (!accessToken || !refreshToken) {
+    redirect("/signin");
+    return; // Con esto detenemos el codigo y cerramos el Redirect para que no explote xd
+  }
 
-const { data, error } = await supabase.auth.setSession({
-  refresh_token: refreshToken.value,
-  access_token: accessToken.value,
-});
-
-if (error) {
-  cookies.delete("sb-access-token", {
-    path: "/",
-  });
-  cookies.delete("sb-refresh-token", {
-    path: "/",
+  const { data, error } = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
   });
 
-  return redirect("/signin");
+  if (error) {
+    cookies.delete("sb-access-token", {
+      path: "/",
+    });
+    cookies.delete("sb-refresh-token", {
+      path: "/",
+    });
+
+    redirect("/signin");
+    return; // Aca lo mismo que el redirect de arriba, para que no explote
+  }
+
+  return data?.user?.email;
 }
 
-const email = data?.user?.email;
+const email = await handleAuth();
+if (!email) {
+  return; // Aca lo mismo pero para el await parece
+}
 ---
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div
