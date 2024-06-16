@@ -1,16 +1,15 @@
 ---
-
 import { supabase } from "../db/supabase";
 
 const { cookies, redirect } = Astro;
 
-const accessToken = cookies.get("sb-access-token");
-const refreshToken = cookies.get("sb-refresh-token");
-
 async function handleAuth() {
+  const accessToken = cookies.get("sb-access-token");
+  const refreshToken = cookies.get("sb-refresh-token");
+
   if (!accessToken || !refreshToken) {
     redirect("/signin");
-    return; // Con esto detenemos el codigo y cerramos el Redirect para que no explote xd
+    return null; // Aseguramos que el código no continúe
   }
 
   const { data, error } = await supabase.auth.setSession({
@@ -19,24 +18,22 @@ async function handleAuth() {
   });
 
   if (error) {
-    cookies.delete("sb-access-token", {
-      path: "/",
-    });
-    cookies.delete("sb-refresh-token", {
-      path: "/",
-    });
+    cookies.delete("sb-access-token", { path: "/" });
+    cookies.delete("sb-refresh-token", { path: "/" });
 
     redirect("/signin");
-    return; // Aca lo mismo que el redirect de arriba, para que no explote
+    return null; // Aseguramos que el código no continúe
   }
 
   return data?.user?.email;
 }
 
-const email = await handleAuth();
-if (!email) {
-  return; // Aca lo mismo pero para el await parece
-}
+(async () => {
+  const email = await handleAuth();
+  if (!email) {
+    return; // Detenemos el código si no hay email
+  }
+})();
 ---
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
   <div
@@ -73,7 +70,7 @@ if (!email) {
             clip-rule="evenodd"></path>
         </svg>
       </button>
-      
+
       <button
       type="button"
      class="text-gray-500 dark:text-gray-400  dark:hover:bg-gray-700  focus:ring-gray-200  rounded-lg text-sm p-1">
@@ -94,11 +91,11 @@ if (!email) {
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
         </svg>
-        
-        
+
+
         </button>
-     
-        
+
+
 
       <!-- Dropdown menu -->
       <div
@@ -107,7 +104,7 @@ if (!email) {
       >
         <div class="px-4 py-3">
           <span  class="block text-sm text-gray-900 dark:text-white"
-            >{email}</span
+            >{handleAuth}</span
           >
           <span
             class="block text-sm text-gray-500 truncate dark:text-gray-400"
