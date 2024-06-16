@@ -4,51 +4,14 @@ import Card from "../components/Card.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<div class="slide-right">
-			<h1 class="font-semibold rounded-md text-slate-900">
-				Bienvenidos a <span class="text-gradient">L'accesorios</span>
-			</h1>
-		</div>
-		<br />
 
-		
+	<main>
+
+
+		<Card />
+	
+
 	</main>
 </Layout>
 
-<style>
-	h1 {
-		margin-top: 150px !important;
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-	}
-	.text-gradient,
-	h1 {
-		color: #17f15e;
-		background-image: -webkit-linear-gradient(
-			0deg,
-			#17f15e 0%,
-			#323978 33%,
-			#b1299c 67%
-		);
-		background-clip: text;
-		-webkit-background-clip: text;
-		text-fill-color: transparent;
-		-webkit-text-fill-color: transparent;
-		background-size: 230%;
-		background-position: 0%;
-	}
-	.slide-right {
-		animation: slide-right 0.99s linear both;
-	}
-	@keyframes slide-right {
-		0% {
-			transform: translateX(-500px);
-		}
-		100% {
-			transform: translateX(30px);
-		}
-	}
-</style>
+

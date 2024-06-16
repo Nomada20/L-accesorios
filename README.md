@@ -55,6 +55,8 @@ A continuación, algunos comandos útiles para trabajar con el proyecto:
 - **Instalar dependencias**
 - Después de clonar el proyecto, ejecuta:
   ```
+  pnpm install flowbite
+
   pnpm install
   ```
   Este comando instalará todas las dependencias descritas en el archivo `package.json`. Si no lo haces, podrías experimentar problemas con el proyecto.
