@@ -1,6 +1,6 @@
 ---
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -11,25 +11,22 @@ import Footer from '../components/Footer.astro';
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    
-  </head>
-  <script src="../pages/test.js"></script>
 
-<script src="../pages/api/users/get.ts"></script>
-<script>
-  if (
-    localStorage.getItem("color-theme") === "dark" ||
-    (!("color-theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches)
-  ) {
-    document.documentElement.classList.add("dark");
-  } else {
-    document.documentElement.classList.remove("dark");
-  }
-</script>
+    <script src="../pages/test.js"></script><script
+      src="../pages/api/users/get.ts"></script><script>
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script></head
+  >
 
-  <body >
-
+  <body>
     <Navbar />
 
     <slot />
@@ -38,9 +35,9 @@ import Footer from '../components/Footer.astro';
   </body>
 </html>
 <script
-      is:inline
-      src="https://cdnjs.cloudflare,com/ajax/libs/flowbite/1.8.0/flowbite.min.js"
-    ></script>
+  is:inline
+  src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.0/flowbite.min.js"
+></script>
 
 <script>
   import { Modal } from "flowbite";
@@ -59,68 +56,73 @@ import Footer from '../components/Footer.astro';
   }
 </script>
 <style is:global>
-   :root {
-      --accent: 136, 58, 234;
-      --accent-light: 224, 204, 250;
-      --accent-dark: 49, 10, 101;
-      --accent-gradient: linear-gradient(
-        45deg,
-        rgb(var(--accent)),
-        rgb(var(--accent-light)) 30%,
-        white 60%
-      );
-      --bg-color-light: #ff6a6a;
-      --bg-color-dark: #333;
-      --text-color-light: #000;
-      --text-color-dark: #fff;
-      --text-shadow-light: 1px -1px 0 #767676, -1px 1px 1px #9b9b9b,
-        -2px 2px 1px #c1c1c1, -3px 3px 1px #c9c9c9, -4px 4px 1px #e6e6e6,
-        -5px 5px 1px #efefef;
-      --text-shadow-dark: 1px -1px 0 #000, -1px 1px 1px #111, -2px 2px 1px #222,
-        -3px 3px 1px #333, -4px 4px 1px #444, -5px 5px 1px #555;
-    }
-  
-    html {
-      font-family: system-ui, sans-serif;
-      background-color: var(--bg-color-light);
-      background-size: 224px;
-      color: var(--text-color-light);
-    }
-  
-    html.dark {
-      background-color: var(--bg-color-dark);
-      color: var(--text-color-dark);
-    }
-  
-    code {
-      font-family:
-        Menlo,
-        Monaco,
-        Lucida Console,
-        Liberation Mono,
-        DejaVu Sans Mono,
-        Bitstream Vera Sans Mono,
-        Courier New,
-        monospace;
-    }
-  
-    h1 {
-      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
-        "AppleGothic", sans-serif;
-      font-size: 20px;
-      padding: 2px 5px;
-      text-align: start;
-      text-transform: uppercase;
-      text-rendering: optimizeLegibility;
-    }
-  
-    .elegantshadow {
-      letter-spacing: 0.01em;
-      text-shadow: var(--text-shadow-light);
-    }
-  
-    html.dark .elegantshadow {
-      text-shadow: var(--text-shadow-dark);
-    }
-</style>
+  :root {
+    --accent: 136, 58, 234;
+    --accent-light: 224, 204, 250;
+    --accent-dark: 49, 10, 101;
+    --accent-gradient: linear-gradient(
+      45deg,
+      rgb(var(--accent)),
+      rgb(var(--accent-light)) 30%,
+      white 60%
+    );
+    --bg-color-light: #ff6a6a;
+    --bg-color-dark: #333;
+    --text-color-light: #000;
+    --text-color-dark: #fff;
+    --text-shadow-light: 1px -1px 0 #767676, -1px 1px 1px #9b9b9b,
+      -2px 2px 1px #c1c1c1, -3px 3px 1px #c9c9c9, -4px 4px 1px #e6e6e6,
+      -5px 5px 1px #efefef;
+    --text-shadow-dark: 1px -1px 0 #000, -1px 1px 1px #111, -2px 2px 1px #222,
+      -3px 3px 1px #333, -4px 4px 1px #444, -5px 5px 1px #555;
+  }
 
+  html {
+    font-family: system-ui, sans-serif;
+    background-color: var(--bg-color-light);
+    background-size: 224px;
+    color: var(--text-color-light);
+  }
+
+  html.dark {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+  }
+
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
+
+  h1 {
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic,
+      "AppleGothic", sans-serif;
+    font-size: 20px;
+    padding: 2px 5px;
+    text-align: start;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+  }
+
+  .elegantshadow {
+    letter-spacing: 0.01em;
+    text-shadow: var(--text-shadow-light);
+  }
+
+  html.dark .elegantshadow {
+    text-shadow: var(--text-shadow-dark);
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+</style>
