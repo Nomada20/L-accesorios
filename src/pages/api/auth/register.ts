@@ -1,7 +1,5 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../../db/supabase";
-import { any } from "astro/zod";
-
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
@@ -21,6 +19,5 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         return new Response(error.message, { status: 500 });
     }
 
-    return redirect("/");
-    
+    return redirect("/signin");
 };
