@@ -4,7 +4,7 @@ import { supabase } from "../../../db/supabase";
 export const GET: APIRoute = async () => {
   try {
     const { data, error } = await supabase
-      .from('cliente')
+      .from('usuario')
       .select('*');
 
     if (error) {
@@ -12,12 +12,14 @@ export const GET: APIRoute = async () => {
     }
 
     // Construir una respuesta HTML
-    const clientesHtml = data.map(cliente => `
+    const clientesHtml = data.map(usuario => `
       <tr>
-        <td>${cliente.idcliente}</td>
-        <td>${cliente.nombre_completo}</td>
-        <td>${cliente.telefono}</td>
-        <td>${cliente.creado_en}</td>
+        <td>${usuario.idusuario}</td>
+        <td>${usuario.nombre}</td>
+        <td>${usuario.apellido}</td>
+        <td>${usuario.telefono}</td>
+        <td>${usuario.genero}</td>
+        <td>${usuario.creado_en}</td>
       </tr>
     `).join('');
 
@@ -42,7 +44,9 @@ export const GET: APIRoute = async () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre Completo</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Genero</th>
               <th>Teléfono</th>
               <th>Creado En</th>
             </tr>

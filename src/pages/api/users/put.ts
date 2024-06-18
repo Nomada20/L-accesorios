@@ -3,16 +3,16 @@ import { supabase } from "../../../db/supabase";
 
 export const PUT: APIRoute = async ({ request }) => {
   try {
-    const { idcliente, nombre_completo, telefono } = await request.json();
+    const { idusuario, nombre, apellido, genero, telefono } = await request.json();
 
-    if (!idcliente || !nombre_completo || !telefono) {
-      return new Response("ID, nombre completo y teléfono son obligatorios", { status: 400 });
+    if (!idusuario || !nombre || apellido || genero || !telefono) {
+      return new Response("Debes rellenar todos los campos", { status: 400 });
     }
 
     const { data, error } = await supabase
-      .from('cliente')
-      .update({ nombre_completo, telefono })
-      .eq('idcliente', idcliente);
+      .from('usuario')
+      .update({ nombre, apellido, genero, telefono })
+      .eq('idusuario', idusuario);
 
     if (error) {
       throw error;

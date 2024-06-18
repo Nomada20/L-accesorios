@@ -3,16 +3,16 @@ import { supabase } from "../../../db/supabase";
 
 export const DELETE: APIRoute = async ({ request }) => {
   try {
-    const { idcliente } = await request.json();
+    const { idusuario } = await request.json();
 
-    if (!idcliente) {
+    if (!idusuario) {
       return new Response("ID es obligatorio", { status: 400 });
     }
 
     const { data, error } = await supabase
-      .from('cliente')
+      .from('usuario')
       .delete()
-      .eq('idcliente', idcliente);
+      .eq('idusuario', idusuario);
 
     if (error) {
       throw error;
