@@ -12,8 +12,8 @@ import Footer from "../components/Footer.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <script src="../pages/test.js"></script><script
-      src="../pages/api/users/get.ts"></script><script>
+    <script src="../pages/test.js" ></script>
+    <script>
       if (
         localStorage.getItem("color-theme") === "dark" ||
         (!("color-theme" in localStorage) &&
@@ -23,8 +23,7 @@ import Footer from "../components/Footer.astro";
       } else {
         document.documentElement.classList.remove("dark");
       }
-    </script></head
-  >
+    </script>
 
   <body>
     <Navbar />
@@ -40,21 +39,20 @@ import Footer from "../components/Footer.astro";
 ></script>
 
 <script>
-  import { Modal } from "flowbite";
+import { Modal } from "flowbite";
 
-  // select the two elements that we'll work with
-  const $buttonElement: HTMLElement | null = document.querySelector("#button");
-  const $modalElement: HTMLElement | null =
-    document.querySelector("#defaultModal");
+document.addEventListener("DOMContentLoaded", function () {
+  const $buttonElement = document.querySelector("#button") as HTMLElement;
+  const $modalElement = document.querySelector("#defaultModal") as HTMLElement;
 
-  // create a new modal component
-  const modal = new Modal($modalElement);
-
-  // toggle the visibility of the modal when clicking on the button
-  if ($buttonElement) {
+  if ($buttonElement && $modalElement) {
+    const modal = new Modal($modalElement);
     $buttonElement.addEventListener("click", () => modal.toggle());
   }
+});
+
 </script>
+
 <style is:global>
   :root {
     --accent: 136, 58, 234;
