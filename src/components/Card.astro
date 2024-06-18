@@ -1,7 +1,7 @@
 ---
 import { supabase } from "../db/supabase";
 
-// Función para obtener productos desde Supabase
+
 async function getProducts() {
   console.log("Fetching products...");
   const { data, error } = await supabase.from('producto').select('*');
@@ -10,13 +10,13 @@ async function getProducts() {
     return [];
   }
 
-  console.log("Products fetched successfully:", data);
+ 
   return data;
 }
 
 // Ejecutar la obtención de datos antes de renderizar el componente
 const productos = await getProducts();
-console.log("Productos obtenidos:", productos);
+
 ---
 
 <!-- Render the products -->
