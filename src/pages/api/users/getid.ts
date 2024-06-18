@@ -6,15 +6,15 @@ export const GET: APIRoute = async ({ request }) => {
   const id = url.searchParams.get('id'); // Obtener el ID del cliente desde los parámetros de la URL
 
   if (!id) {
-    return new Response("ID de cliente no proporcionado", { status: 400 });
+    return new Response("ID de usuario no proporcionado", { status: 400 });
   }
 
   try {
     // Obtener un cliente específico por ID
     const { data, error } = await supabase
-      .from('cliente')
+      .from('usuario')
       .select('*')
-      .eq('idcliente', id)
+      .eq('idusuario', id)
       .single();
 
     if (error) {
@@ -28,7 +28,7 @@ export const GET: APIRoute = async ({ request }) => {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cliente</title>
+        <title>Usuario</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 20px; }
           table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -38,20 +38,24 @@ export const GET: APIRoute = async ({ request }) => {
         </style>
       </head>
       <body>
-        <h1>Cliente</h1>
+        <h1>Usuario</h1>
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nombre Completo</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Genero</th>
               <th>Teléfono</th>
               <th>Creado En</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>${data.idcliente}</td>
-              <td>${data.nombre_completo}</td>
+              <td>${data.idusuario}</td>
+              <td>${data.nombre}</td>
+              <td>${data.apellido}</td>
+              <td>${data.genero}</td>
               <td>${data.telefono}</td>
               <td>${data.creado_en}</td>
             </tr>
