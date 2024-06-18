@@ -1,6 +1,6 @@
 ---
 import { supabase } from "../db/supabase";
-
+import AdminLayout from "../layouts/Admin-Layout.astro";
 // Función para obtener usuarios desde Supabase
 export async function getUsuarios() {
   try {
@@ -21,99 +21,117 @@ export async function getUsuarios() {
 const usuarios = await getUsuarios();
 
 const eliminarUsuario = async (idUsuario) => {
-    try {
-      const response = await fetch("/api/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ idusuario: idUsuario }),
-      });
+  try {
+    const response = await fetch("/api/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ idusuario: idUsuario }),
+    });
 
-      if (response.ok) {
-        // Refrescar la lista de usuarios después de eliminar
-        const updatedUsuarios = usuarios.filter((usuario) => usuario.idusuario !== idUsuario);
-        getUsuarios(updatedUsuarios);
-      } else {
-        console.error("Error al eliminar usuario:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error al eliminar usuario:", error.message);
+    if (response.ok) {
+      // Refrescar la lista de usuarios después de eliminar
+      const updatedUsuarios = usuarios.filter(
+        (usuario) => usuario.idusuario !== idUsuario,
+      );
+      getUsuarios(updatedUsuarios);
+    } else {
+      console.error("Error al eliminar usuario:", response.statusText);
     }
-  };
+  } catch (error) {
+    console.error("Error al eliminar usuario:", error.message);
+  }
+};
 ---
-<div class="bg-blue-700">
-<h2 class="text-xl font-bold mb-4">Lista de Usuarios</h2>
-<div class="flex center mt-20 ml-60 mr-60 border-4 border-gray-600 bg-white">
-  <table class="min-w-full divide-y divide-gray-800">
-    <thead class="bg-gray-100">
-      <tr>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          ID
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Nombre
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Apellido
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Genero
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Telefono
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Creado En
-        </th>
-        <th
-          class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-        >
-          Opciones
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Iterar sobre los usuarios y renderizar cada fila -->
-      {
-        usuarios.map((usuario) => (
-          <tr key={usuario.idusuario}>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.idusuario}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.nombre}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.apellido}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.genero}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.telefono}</td>
-            <td class="px-6 py-4 whitespace-nowrap">{usuario.creado_en}</td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <button
-                onClick={() => eliminarUsuario(usuario.idusuario)}
-                className="text-red-600 hover:text-red-800 mr-2"
+
+<AdminLayout>
+  <div class="p-4 sm:ml-64">
+    <div
+      class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"
+    >
+      <div
+        class="relative overflow-x-auto shadow-md sm:rounded-lg"
+      >
+        <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-b">
+            <tr>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Eliminar
-              </button>
-              <a
-                href={`/usuario?id=${usuario.idusuario}`}
-                class="text-blue-600 hover:text-blue-800"
+                ID
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Ver Detalles
-              </a>
-            </td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
-</div>
-</div>
+                Nombre
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Apellido
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Genero
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Telefono
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Creado En
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Opciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Iterar sobre los usuarios y renderizar cada fila -->
+            {
+              usuarios.map((usuario) => (
+                <tr key={usuario.idusuario} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {usuario.idusuario}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{usuario.nombre}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {usuario.apellido}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">{usuario.genero}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {usuario.telefono}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    {usuario.creado_en}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <button class="text-red-600 hover:text-red-800 mr-2"
+                      onClick={() => eliminarUsuario(usuario.idusuario)}
+                      
+                    >
+                      Eliminar
+                    </button>
+                    <a
+                      href={`/usuario?id=${usuario.idusuario}`}
+                      class="text-blue-600 hover:text-blue-800"
+                    >
+                      Ver Detalles
+                    </a>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
