@@ -25,7 +25,7 @@ import Footer from "../components/Footer.astro";
       }
     </script>
 
-  <body>
+  <body >
     <Navbar />
 
     <slot />
@@ -64,8 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
       rgb(var(--accent-light)) 30%,
       white 60%
     );
-    --bg-color-light: #ff6a6a;
-    --bg-color-dark: #333;
+    --bg-color-light: #bbf7d0;
+    --bg-color-dark: #15803d;
+    --nav-color-dark: #052e16;
     --text-color-light: #000;
     --text-color-dark: #fff;
     --text-shadow-light: 1px -1px 0 #767676, -1px 1px 1px #9b9b9b,
@@ -116,6 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   html.dark .elegantshadow {
     text-shadow: var(--text-shadow-dark);
+  }
+
+
+  html.dark .Navbar{
+    background-color: var(--bg-color-dark);
   }
 
 
