@@ -1,16 +1,12 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../../db/supabase";
 
-
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const formData = await request.formData();
-    const nombre = formData.get("nombre")?.toString();
-    const apellido = formData.get("apellido")?.toString();
-    const genero = formData.get("genero")?.toString();
-    const telefono = formData.get("telefono")?.toString();
+    const json = await request.json();
+    const { nombre, apellido, genero, telefono } = json;
 
-    if (!nombre || !telefono || !genero || !apellido) {
+    if (!nombre || !apellido || !genero || !telefono) {
       return new Response("Todos los campos deben estar rellenados", { status: 400 });
     }
 
