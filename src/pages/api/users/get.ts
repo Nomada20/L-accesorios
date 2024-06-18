@@ -3,7 +3,7 @@ import { supabase } from "../../../db/supabase";
 
 export const GET: APIRoute = async () => {
   try {
-    const { data, error } = await supabase
+    let { data: usuarios, error } = await supabase
       .from('usuario')
       .select('*');
 
@@ -11,61 +11,25 @@ export const GET: APIRoute = async () => {
       throw error;
     }
 
-    // Construir una respuesta HTML
-    const clientesHtml = data.map(usuario => `
-      <tr>
-        <td>${usuario.idusuario}</td>
-        <td>${usuario.nombre}</td>
-        <td>${usuario.apellido}</td>
-        <td>${usuario.telefono}</td>
-        <td>${usuario.genero}</td>
-        <td>${usuario.creado_en}</td>
-      </tr>
-    `).join('');
+    const responseBody = JSON.stringify(usuarios); // Convertir el array de usuarios a JSON
 
-    const html = `
-      <!DOCTYPE html>
-      <html lang="es">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lista de Clientes</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 20px; }
-          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-          th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-          th { background-color: #f4f4f4; }
-          tr:nth-child(even) { background-color: #f9f9f9; }
-        </style>
-      </head>
-      <body>
-        <h1>Lista de Clientes</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Genero</th>
-              <th>Teléfono</th>
-              <th>Creado En</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${clientesHtml}
-          </tbody>
-        </table>
-      </body>
-      </html>
-    `;
+    console.log(usuarios);
 
-    return new Response(html, {
+    const response = new Response(responseBody, {
       status: 200,
       headers: {
-        'Content-Type': 'text/html'
-      }
+        'Content-Type': 'application/json',
+      },
     });
+
+    return response;
   } catch (err) {
-    return new Response((err as Error).message, { status: 500 });
+    const errorMessage = (err as Error).message;
+
+    const errorResponse = new Response(errorMessage, {
+      status: 500,
+    });
+
+    return errorResponse;
   }
 };

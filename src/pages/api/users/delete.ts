@@ -14,6 +14,9 @@ export const DELETE: APIRoute = async ({ request }) => {
       .delete()
       .eq('idusuario', idusuario);
 
+    // Agregar console.log para mostrar el JSON del resultado
+    console.log("Resultado de la consulta:", data);
+
     if (error) {
       throw error;
     }
