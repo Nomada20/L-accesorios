@@ -1,0 +1,154 @@
+---
+/* eslint max-lines: 'off' */
+
+import AdminLayout from "../layouts/Admin-Layout.astro";
+
+import { getProducts, addProduct, updateProduct, deleteProduct } from "./crudproducts.ts";
+
+
+const products = await getProducts();
+
+let showModal = false;
+let modalType = '';
+let currentProduct = null;
+
+const handleOpenModal = (type, product) => {
+    modalType = type;
+    currentProduct = product;
+    showModal = true;
+};
+
+const handleCloseModal = () => {
+    showModal = false;
+    currentProduct = null;
+};
+
+const handleDeleteProduct = async (id) => {
+    await deleteProduct(id);
+    window.location.reload(); // Recargar la página para reflejar los cambios
+};
+
+const handleSearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    document.querySelectorAll('#productTable tr').forEach(row => {
+        const name = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
+        row.style.display = name.includes(searchTerm) ? '' : 'none';
+    });
+};
+
+const handleFilter = (event) => {
+    const categoryFilter = document.querySelector('#categoryFilter').value;
+    const optionFilter = document.querySelector('#optionFilter').value;
+
+    document.querySelectorAll('#productTable tr').forEach(row => {
+        const category = row.querySelector('td:nth-child(6)').textContent;
+        const option = row.querySelector('td:nth-child(7)').textContent;
+        const matchesCategory = categoryFilter === '' || category === categoryFilter;
+        const matchesOption = optionFilter === '' || option === optionFilter;
+        row.style.display = matchesCategory && matchesOption ? '' : 'none';
+    });
+};
+
+---
+
+<AdminLayout>
+
+<body class="bg-gray-100 p-4">
+    <h1 class="text-2xl font-bold mb-4">Listado de Productos</h1>
+    <div class="mb-4 flex space-x-2">
+        <input type="text" placeholder="Buscar producto..." oninput={handleSearch} class="border rounded px-2 py-1">
+        <select id="categoryFilter" onchange={handleFilter} class="border rounded px-2 py-1">
+            <option value="">Todas las Categorías</option>
+            <!-- Agrega opciones de categoría -->
+        </select>
+        <select id="optionFilter" onchange={handleFilter} class="border rounded px-2 py-1">
+            <option value="">Todas las Opciones</option>
+            <!-- Agrega opciones de opción -->
+        </select>
+        <button onclick={() => handleOpenModal('add')} class="bg-blue-500 text-white px-4 py-2 rounded">Agregar Producto</button>
+    </div>
+    <table class="min-w-full bg-white rounded shadow overflow-hidden">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 border-b">Nombre</th>
+                <th class="px-4 py-2 border-b">Precio</th>
+                <th class="px-4 py-2 border-b">Descripción</th>
+                <th class="px-4 py-2 border-b">Imagen</th>
+                <th class="px-4 py-2 border-b">Stock</th>
+                <th class="px-4 py-2 border-b">Categoría</th>
+                <th class="px-4 py-2 border-b">Opción</th>
+                <th class="px-4 py-2 border-b">Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="productTable">
+            {products.map(product => (
+                <tr key={product.idproducto}>
+                    <td class="px-4 py-2 border-b">{product.nombre}</td>
+                    <td class="px-4 py-2 border-b">{product.precio}</td>
+                    <td class="px-4 py-2 border-b">{product.descripcion}</td>
+                    <td class="px-4 py-2 border-b"><img src={product.imagen} alt={product.nombre} class="w-16 h-16 object-cover"></td>
+                    <td class="px-4 py-2 border-b">{product.stock}</td>
+                    <td class="px-4 py-2 border-b">{product.categoria.nombre}</td>
+                    <td class="px-4 py-2 border-b">{product.opcion.nombre}</td>
+                    <td class="px-4 py-2 border-b">
+                        <button onclick={() => handleOpenModal('edit', product)} class="bg-yellow-500 text-white px-2 py-1 rounded">Editar</button>
+                        <button onclick={() => handleDeleteProduct(product.idproducto)} class="bg-red-500 text-white px-2 py-1 rounded">Eliminar</button>
+                    </td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+
+    {showModal && (
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div class="bg-white p-6 rounded shadow-lg w-1/2">
+                <h2 class="text-xl font-bold mb-4">{modalType === 'add' ? 'Agregar Producto' : 'Editar Producto'}</h2>
+                <form onsubmit={(event) => {
+                    event.preventDefault();
+                    const form = event.target;
+                    const product = {
+                        nombre: form.nombre.value,
+                        precio: form.precio.value,
+                        descripcion: form.descripcion.value,
+                        imagen: form.imagen.value,
+                        stock: form.stock.value,
+                        idcategoria: form.idcategoria.value,
+                        idopcion: form.idopcion.value,
+                        idsucursal: form.idsucursal.value,
+                    };
+                    if (modalType === 'add') {
+                        addProduct(product).then(() => {
+                            window.location.reload();
+                        });
+                    } else {
+                        updateProduct(currentProduct.idproducto, product).then(() => {
+                            window.location.reload();
+                        });
+                    }
+                }} class="space-y-4">
+                    <input name="nombre" placeholder="Nombre" value={currentProduct ? currentProduct.nombre : ''} required class="border rounded w-full px-2 py-1">
+                    <input name="precio" placeholder="Precio" value={currentProduct ? currentProduct.precio : ''} required class="border rounded w-full px-2 py-1">
+                    <input name="descripcion" placeholder="Descripción" value={currentProduct ? currentProduct.descripcion : ''} required class="border rounded w-full px-2 py-1">
+                    <input name="imagen" placeholder="URL de la Imagen" value={currentProduct ? currentProduct.imagen : ''} required class="border rounded w-full px-2 py-1">
+                    <input name="stock" placeholder="Stock" value={currentProduct ? currentProduct.stock : ''} required class="border rounded w-full px-2 py-1">
+                    <select name="idcategoria" required class="border rounded w-full px-2 py-1">
+                        <option value="">Seleccionar Categoría</option>
+                        <!-- Agrega opciones de categoría -->
+                    </select>
+                    <select name="idopcion" required class="border rounded w-full px-2 py-1">
+                        <option value="">Seleccionar Opción</option>
+                        <!-- Agrega opciones de opción -->
+                    </select>
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" onclick={handleCloseModal} class="bg-gray-500 text-white px-4 py-2 rounded">Cerrar</button>
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">{modalType === 'add' ? 'Agregar' : 'Guardar'}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    )}
+</body>
+
+
+
+</AdminLayout>

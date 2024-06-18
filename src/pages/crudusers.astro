@@ -1,0 +1,18 @@
+---
+import AdminLayout from "../layouts/Admin-Layout.astro";
+import React from "react";
+import UserList from "../components/UserList";
+import UserForm from "../components/UserForm";
+---
+
+<AdminLayout>
+  <>
+    <h1 class="text-3xl font-bold mb-4">CRUD de Usuarios</h1>
+    <div class="max-w-md bg-white shadow-md rounded-md p-4 mb-6">
+      <UserForm />
+    </div>
+    <div class="bg-white shadow-md rounded-md p-4">
+      <UserList />
+    </div>
+  </>
+</AdminLayout>
