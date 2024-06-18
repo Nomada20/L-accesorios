@@ -26,6 +26,7 @@ async function handleAuth() {
   return { isAuthenticated: true, email: data?.user?.email };
 }
 
+
 const authResult = await handleAuth();
 const userEmail = authResult.isAuthenticated ? authResult.email : null;
 ---
