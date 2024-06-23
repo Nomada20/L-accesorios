@@ -9,16 +9,6 @@ export const DELETE: APIRoute = async ({ request }) => {
       return new Response("ID es obligatorio", { status: 400 });
     }
 
-    // Eliminar las asociaciones en la tabla intermedia primero
-    const { data: deletedRelations, error: relationsError } = await supabase
-      .from('promociones_productos')
-      .delete()
-      .eq('idpromocion', idpromocion);
-
-    if (relationsError) {
-      throw relationsError;
-    }
-
     // Luego eliminar la promoción
     const { data: deletedPromotion, error: promotionError } = await supabase
       .from('promociones')
