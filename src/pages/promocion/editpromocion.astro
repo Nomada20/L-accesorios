@@ -1,0 +1,45 @@
+---
+
+import { supabase } from "../../db/supabase"
+import { getURLParams } from "../../utils/GetURLParams"
+
+const params = getURLParams(import.meta.url);
+const idpromocion = params.id;
+
+const { data: promocion } = await supabase
+  .from('promociones')
+  .select('*')
+  .eq('idpromocion', idpromocion)
+  .single();
+
+---
+
+<h1>Editar Promoción</h1>
+    <form method="POST" action="/api/promocion/put">
+      <input type="hidden" name="idpromocion" value={promocion.idpromocion} />
+      <label>
+        Nombre:
+        <input type="text" name="nombre" value={promocion.nombre} required />
+      </label>
+      <label>
+        Descripción:
+        <input type="text" name="descripcion" value={promocion.descripcion} required />
+      </label>
+      <label>
+        Descuento:
+        <input type="number" name="descuento" value={promocion.descuento} required />
+      </label>
+      <label>
+        Válido Desde:
+        <input type="date" name="valido_desde" value={promocion.valido_desde} required />
+      </label>
+      <label>
+        Válido Hasta:
+        <input type="date" name="valido_hasta" value={promocion.valido_hasta} required />
+      </label>
+      <label>
+        Productos (IDs separados por comas):
+        <input type="text" name="productos" value={promocion.productos.join(',')} required />
+      </label>
+      <button type="submit">Guardar Cambios</button>
+    </form>
