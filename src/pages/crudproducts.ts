@@ -21,7 +21,28 @@ export async function getProducts() {
     }
     return data;
 }
+export async function getProductDetails(idproducto: string) {
+    const { data, error } = await supabase
+        .from('producto')
+        .select(`
+            idproducto,
+            nombre,
+            precio,
+            descripcion,
+            imagen,
+            categoria ( idcategoria, nombre ),
+            opcion ( idopcion, nombre ),
+            sucursal ( idsucursal, nombre )
+        `)
+        .eq('idproducto', idproducto)
+        .single();
 
+    if (error) {
+        console.error('Error fetching product details:', error);
+        return null;
+    }
+    return data;
+}
 export async function addProduct(product: { nombre: string; precio: string; descripcion: string; imagen: string; stock: string; idcategoria: string; idopcion: string; idsucursal: string; }) {
     const { data, error } = await supabase
         .from('producto')
@@ -59,3 +80,30 @@ export async function deleteProduct(idproducto: any) {
     }
     return data;
 }
+// En crudproducts.ts
+
+export async function getProductById(idproducto: number): Promise<{ idproducto: number, nombre: string, precio: number, descripcion: string, stock: number, imagen?: string } | null> {
+    try {
+      const { data, error } = await supabase
+        .from('producto')
+        .select('idproducto, nombre, precio, descripcion, stock, imagen') // Asegúrate de incluir 'imagen' si existe en tu tabla
+        .eq('idproducto', idproducto)
+        .single();
+  
+      if (error) {
+        throw new Error('Error fetching product');
+      }
+  
+      return data ? {
+        idproducto: data.idproducto,
+        nombre: data.nombre,
+        precio: data.precio,
+        descripcion: data.descripcion,
+        stock: data.stock,
+        imagen: data.imagen // Asigna 'imagen' si existe en los datos
+      } : null;
+    } catch (error: any) {
+      console.error('Error fetching product:', error.message);
+      return null;
+    }
+  }
