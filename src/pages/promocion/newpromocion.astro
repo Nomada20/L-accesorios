@@ -1,0 +1,31 @@
+---
+---
+
+<h1>Crear Nueva Promoción</h1>
+    <form method="POST" action="/api/promocion/post">
+      <label>
+        Nombre:
+        <input type="text" name="nombre" required />
+      </label>
+      <label>
+        Descripción:
+        <input type="text" name="descripcion" required />
+      </label>
+      <label>
+        Descuento:
+        <input type="number" name="descuento" required />
+      </label>
+      <label>
+        Válido Desde:
+        <input type="date" name="valido_desde" required />
+      </label>
+      <label>
+        Válido Hasta:
+        <input type="date" name="valido_hasta" required />
+      </label>
+      <label>
+        Productos (IDs separados por comas):
+        <input type="text" name="productos" required />
+      </label>
+      <button type="submit">Crear</button>
+    </form>
