@@ -25,7 +25,7 @@ const productos = await getProducts();
 {productos.length > 0 ? ( 
 	productos.map((producto) => (
 	  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-		<a href="#">
+		<a href="/ProductDescription">
 		  <img class="p-8 rounded-t-lg" src={producto.imagen} alt="product image" />
 		</a>
 		<div class="px-7 pb-5">
