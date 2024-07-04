@@ -2,7 +2,7 @@
 import { supabase } from "../db/supabase";
 import AdminLayout from "../layouts/Admin-Layout.astro";
 // Función para obtener usuarios desde Supabase
-export async function getUsuarios() {
+export async function getUsuarios(updatedUsuarios?: any[]) {
   try {
     const { data, error } = await supabase.from("usuario").select("*");
 
@@ -20,7 +20,7 @@ export async function getUsuarios() {
 // Obtener datos de usuarios
 const usuarios = await getUsuarios();
 
-const eliminarUsuario = async (idUsuario) => {
+const eliminarUsuario = async (idUsuario: any) => {
   try {
     const response = await fetch("/api/delete", {
       method: "DELETE",
@@ -33,14 +33,14 @@ const eliminarUsuario = async (idUsuario) => {
     if (response.ok) {
       // Refrescar la lista de usuarios después de eliminar
       const updatedUsuarios = usuarios.filter(
-        (usuario) => usuario.idusuario !== idUsuario,
+        (usuario) => usuario.idusuario !== idUsuario
       );
       getUsuarios(updatedUsuarios);
     } else {
       console.error("Error al eliminar usuario:", response.statusText);
     }
   } catch (error) {
-    console.error("Error al eliminar usuario:", error.message);
+    console.error("Error al eliminar usuario");
   }
 };
 ---
@@ -50,28 +50,34 @@ const eliminarUsuario = async (idUsuario) => {
     <div
       class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14"
     >
-      <div
-        class="relative overflow-x-auto shadow-md sm:rounded-lg"
-      >
-        <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-b">
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table
+          class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+        >
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-2 border-b"
+          >
             <tr>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 ID
               </th>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Nombre
               </th>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Apellido
               </th>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Genero
@@ -81,12 +87,14 @@ const eliminarUsuario = async (idUsuario) => {
               >
                 Telefono
               </th>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Creado En
               </th>
-              <th scope="col"
+              <th
+                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Opciones
@@ -97,7 +105,10 @@ const eliminarUsuario = async (idUsuario) => {
             <!-- Iterar sobre los usuarios y renderizar cada fila -->
             {
               usuarios.map((usuario) => (
-                <tr key={usuario.idusuario} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr
+                  id={usuario.idusuario}
+                  class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
                   <td class="px-6 py-4 whitespace-nowrap">
                     {usuario.idusuario}
                   </td>
@@ -113,10 +124,7 @@ const eliminarUsuario = async (idUsuario) => {
                     {usuario.creado_en}
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <button class="text-red-600 hover:text-red-800 mr-2"
-                      onClick={() => eliminarUsuario(usuario.idusuario)}
-                      
-                    >
+                    <button class="text-red-600 hover:text-red-800 mr-2">
                       Eliminar
                     </button>
                     <a

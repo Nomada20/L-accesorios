@@ -1,0 +1,42 @@
+---
+import { supabase } from "../../db/supabase";
+import AdminLayout from "../../layouts/Admin-Layout.astro";
+
+async function getPromocion(idpromocion: string) {
+  console.log("Fetching promocion...");
+  try {
+    const { data, error } = await supabase
+      .from("promociones")
+      .select("*")
+      .eq("idpromocion", idpromocion)
+      .single();
+
+    console.log(data);
+
+    if (error) {
+      console.error("Error fetching promocion:", error.message);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching promocion:", error);
+    return null;
+  }
+}
+
+
+
+---
+
+<AdminLayout>
+  
+  <astro-form>
+
+    <script>
+      
+    </script>
+
+  </astro-form>
+
+</AdminLayout>
