@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: ^4.11.0
         version: 4.11.0(@types/node@20.14.2)(typescript@5.4.5)
+      astro-router:
+        specifier: ^0.0.1
+        version: 0.0.1
       firebase:
         specifier: ^10.12.2
         version: 10.12.2
@@ -1176,6 +1179,9 @@ packages:
   arrify@2.0.1:
     resolution: {integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==}
     engines: {node: '>=8'}
+
+  astro-router@0.0.1:
+    resolution: {integrity: sha512-q49kyXjVJOZC6YAeInRg4lZOjfxFtxoVdAdD0q94w5SRlO5w9lcRv2ZGZtFBQwP5zsMzy42HsJhHV/rK2anKLA==}
 
   astro@4.11.0:
     resolution: {integrity: sha512-3VWxz/08sChQIX68tuE7Y769DUdjsT3Zq2/y4SkrDRlwN9IZ/aebwcRWr5a2yMSdO2vpFxtEdobq0mKnMlLErg==}
@@ -4460,6 +4466,8 @@ snapshots:
 
   arrify@2.0.1:
     optional: true
+
+  astro-router@0.0.1: {}
 
   astro@4.11.0(@types/node@20.14.2)(typescript@5.4.5):
     dependencies:
