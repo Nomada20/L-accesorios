@@ -1,73 +1,47 @@
 ---
-import { getProducts, getProductById } from "../pages/crudproducts.ts";
+import { getProducts } from "../pages/crudproducts.ts";
 
-const producto = await getProducts();
-
-
+const productos = await getProducts();
 ---
+
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5">
-  <!-- Mostrar productos -->
-  {producto.length > 0 ? ( 
-	producto.map((producto) => (
-    <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <a
-        role="button"
-        on:click={async () => {
-          const productDetails = await getProductById(producto.idproducto);
-          if (productDetails) {
-            console.log(`Mostrando detalle del producto: ${productDetails.nombre}`);
-            // Implementa aquí la lógica para mostrar el detalle del producto
-          }
-        }}
-        class="block"
-      >
-        <img
-          class="p-8 rounded-t-lg"
-          src={producto.imagen}
-          alt="product image"
-        />
-      </a>
-      <div class="px-7 pb-5">
-        <a
-          role="button"
-          on:click={async () => {
-            const productDetails = await getProductById(producto.idproducto);
-            if (productDetails) {
-              console.log(`Mostrando detalle del producto: ${productDetails.nombre}`);
-              // Implementa aquí la lógica para mostrar el detalle del producto
-            }
-          }}
-          class="block"
-        >
+  {productos.length > 0 ? (
+    productos.map((producto) => (
+      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" key={producto.idproducto}>
+        <div class="product-card" data-idproducto={producto.idproducto}>
+          <img class="p-8 rounded-t-lg" src={producto.imagen} alt="product image" />
+        </div>
+        <div class="px-7 pb-5 product-card" data-idproducto={producto.idproducto}>
           <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {producto.nombre}
           </h5>
-        </a>
-        <div class="flex items-center mt-2.5 mb-5">
-          <!-- Estrellas y calificaciones -->
-        </div>
-        <div class="flex items-end">
-          <span class="text-3xl font-bold text-gray-900 dark:text-white">
-            ${producto.precio}
-          </span>
-          <a
-            role="button"
-            on:click={async () => {
-              const productDetails = await getProductById(producto.idproducto);
-              if (productDetails) {
-                console.log(`Mostrando detalle del producto: ${productDetails.nombre}`);
-                // Implementa aquí la lógica para mostrar el detalle del producto
-              }
-            }}
-            class="w-full self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Ver detalles
-          </a>
+          <div class="flex items-center mt-2.5 mb-5">
+            <!-- Estrellas y calificaciones -->
+          </div>
+          <div class="flex items-end">
+            <span class="text-3xl font-bold text-gray-900 dark:text-white">
+              ${producto.precio}
+            </span>
+            <div class="w-full self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 product-card" data-idproducto={producto.idproducto}>
+              Ver detalles
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-	))
+    ))
   ) : (
-	<p>No hay productos disponibles</p>
+    <p>No hay productos disponibles</p>
   )}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const idproducto = card.getAttribute('data-idproducto');
+        window.location.href = `/ProductDescription?idproducto=${idproducto}`;
+      });
+    });
+  });
+</script>
