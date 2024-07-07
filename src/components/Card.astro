@@ -7,7 +7,7 @@ const productos = await getProducts();
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5">
   {productos.length > 0 ? (
     productos.map((producto) => (
-      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" key={producto.idproducto}>
+      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" >
         <div class="product-card" data-idproducto={producto.idproducto}>
           <img class="p-8 rounded-t-lg" src={producto.imagen} alt="product image" />
         </div>
@@ -15,18 +15,17 @@ const productos = await getProducts();
           <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {producto.nombre}
           </h5>
-          <div class="flex items-center mt-2.5 mb-5">
-            <!-- Estrellas y calificaciones -->
-          </div>
-          <div class="flex items-end">
+          <div class="flex items-center justify-items-center content-center  mt-2.5 mb-5">
             <span class="text-3xl font-bold text-gray-900 dark:text-white">
               ${producto.precio}
             </span>
-            <div class="w-full self-end text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 product-card" data-idproducto={producto.idproducto}>
-              Ver detalles
-            </div>
           </div>
         </div>
+        <div class="flex items-end justify-center m-0 mb-2 ">  
+            <div class="flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Agregar al carrito
+            </div>
+          </div>
       </div>
     ))
   ) : (

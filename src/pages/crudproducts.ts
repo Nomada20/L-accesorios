@@ -83,14 +83,24 @@ export async function deleteProduct(idproducto: any) {
 
 export async function getProductById(idproducto: number) {
     const { data, error } = await supabase
-        .from('producto')
-        .select('*')
-        .eq('idproducto', idproducto)
-        .single();
+    .from('producto')
+    .select(`
+        idproducto,
+        nombre,
+        precio,
+        descripcion,
+        imagen,
+        categoria ( idcategoria, nombre ),
+        opcion ( idopcion, nombre ),
+        sucursal ( idsucursal, nombre ),
+        reseña ( valoracion, comentario )
+    `)
+    .eq('idproducto', idproducto)
+    .single();
 
-    if (error) {
-        console.error('Error fetching product details:', error);
-        return null;
-    }
-    return data;
+if (error) {
+    console.error('Error fetching product details:', error);
+    return null;
+}
+return data;
 }
