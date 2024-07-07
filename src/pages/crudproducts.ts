@@ -92,8 +92,7 @@ export async function getProductById(idproducto: number) {
         imagen,
         categoria ( idcategoria, nombre ),
         opcion ( idopcion, nombre ),
-        sucursal ( idsucursal, nombre ),
-        reseña ( valoracion, comentario )
+        sucursal ( idsucursal, nombre )
     `)
     .eq('idproducto', idproducto)
     .single();
