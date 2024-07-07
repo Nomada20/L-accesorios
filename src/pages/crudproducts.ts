@@ -21,7 +21,28 @@ export async function getProducts() {
     }
     return data;
 }
+export async function getProductDetails(idproducto: string) {
+    const { data, error } = await supabase
+        .from('producto')
+        .select(`
+            idproducto,
+            nombre,
+            precio,
+            descripcion,
+            imagen,
+            categoria ( idcategoria, nombre ),
+            opcion ( idopcion, nombre ),
+            sucursal ( idsucursal, nombre )
+        `)
+        .eq('idproducto', idproducto)
+        .single();
 
+    if (error) {
+        console.error('Error fetching product details:', error);
+        return null;
+    }
+    return data;
+}
 export async function addProduct(product: { nombre: string; precio: string; descripcion: string; imagen: string; stock: string; idcategoria: string; idopcion: string; idsucursal: string; }) {
     const { data, error } = await supabase
         .from('producto')
@@ -58,4 +79,27 @@ export async function deleteProduct(idproducto: any) {
         return null;
     }
     return data;
+}
+
+export async function getProductById(idproducto: number) {
+    const { data, error } = await supabase
+    .from('producto')
+    .select(`
+        idproducto,
+        nombre,
+        precio,
+        descripcion,
+        imagen,
+        categoria ( idcategoria, nombre ),
+        opcion ( idopcion, nombre ),
+        sucursal ( idsucursal, nombre )
+    `)
+    .eq('idproducto', idproducto)
+    .single();
+
+if (error) {
+    console.error('Error fetching product details:', error);
+    return null;
+}
+return data;
 }
