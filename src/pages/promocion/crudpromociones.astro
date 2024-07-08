@@ -17,41 +17,40 @@ const promociones = await getPromociones();
 ---
 
 <AdminLayout>
-  <main>
     <div class="p-4 sm:ml-64">
-      {
-        promociones.length > 0 ? (
-          promociones.map((promocion) => (
-            <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+  
+            <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14 shadow-2xl">
               <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+                  <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
                     <tr>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         ID Promocion
                       </th>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         Nombre
                       </th>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         Descripcion
                       </th>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         Descuento
                       </th>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         Valido desde
                       </th>
-                      <th scope="col" class="px-6 py-5">
+                      <th scope="col" class="px-7 py-6">
                         Valido hasta
                       </th>
-                      <th scope="col" class="px-6 py-5">
-                      </th>
+                  
                     </tr>
                   </thead>
 
                   <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    {
+                      promociones.length > 0 ? (
+                        promociones.map((promocion) => (
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                       <th
                         scope="row"
                         class="px-6 py-4 truncate font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -68,11 +67,7 @@ const promociones = await getPromociones();
                         <a class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))
+                         ))
         ) : (
           <tr class="bg-white dark:bg-gray-800">
             <td
@@ -84,15 +79,15 @@ const promociones = await getPromociones();
           </tr>
         )
       }
+                  </tbody>
+                  
+                </table>
+              </div>
+            </div>
+     
     </div>
-  </main>
 
-  <style>
-    .truncate {
-      max-width: 0; /* Esta propiedad es necesaria para activar text-overflow */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  </style>
+
+
 </AdminLayout>
+
