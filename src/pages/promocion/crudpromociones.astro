@@ -3,95 +3,13 @@ import AdminLayout from "../../layouts/Admin-Layout.astro";
 
 import { supabase } from "../../db/supabase";
 
-async function getPromociones() {
-  console.log("Fetching promociones...");
-  const { data, error } = await supabase.from("promociones").select("*");
-  if (error) {
-    return [];
-  }
-
-  return data;
-}
-
-const promociones = await getPromociones();
+import ListaPromociones from "../../components/ListaPromociones";
 ---
 
 <AdminLayout>
-    <div class="p-4 sm:ml-64">
-  
-            <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14 shadow-2xl">
-              <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
-                    <tr >
-                      <th scope="col" class="px-10 py-5 border">
-                        IDPromocion
-                      </th>
-                      <th scope="col" class="px-8 py-5 border">
-                        Nombre
-                      </th>
-                      <th scope="col" class="px-9 py-5 border">
-                        Descripcion
-                      </th>
-                      <th scope="col" class="px-7 py-5 border">
-                        Descuento
-                      </th>
-                      <th scope="col" class="px-7 py-5 border">
-                        Valido desde
-                      </th>
-                      <th scope="col" class="px-7 py-5 border">
-                        Valido hasta
-                      </th>
-                      <th scope="col" class="px-7 py-6 border">
-                        opciones
-                      </th>
-                  
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {
-                      promociones.length > 0 ? (
-                        promociones.map((promocion) => (
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 truncate font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        {promocion.idpromocion}
-                      </th>
-                      <td class="px-6 py-1 border"> {promocion.nombre} </td>
-                      <td class="px-6 py-1 border"> {promocion.descripcion} </td>
-                      <td class="px-6 py-1 border"> {promocion.descuento }%</td>
-
-                      <td class="px-4 py-1 border"> {promocion.valido_desde} </td>
-                      <td class="px-4 py-1 border"> {promocion.valido_hasta} </td>
-                      <td class="px-6 py-1 border">
-                        <a class="inline-block m-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/${promocion.idpromocion}`}>Ver</a>
-                        <a class="inline-block m-1 w-full bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
-                      </td>
-                    </tr>
-                         ))
-        ) : (
-          <tr class="bg-white dark:bg-gray-800">
-            <td
-              colspan="4"
-              class="px-6 py-4 text-center text-lg text-gray-500 dark:text-gray-400"
-            >
-              No hay productos disponibles
-            </td>
-          </tr>
-        )
-      }
-                  </tbody>
-                  
-                </table>
-              </div>
-            </div>
-     
-    </div>
-
-
-
+  <ListaPromociones
+      apiUrlMisPromociones="https://api-promociones.vercel.app/API/promocion/get"
+      apiUrlPromocionesCompañeros="https://api-promociones-steel.vercel.app/promociones"
+    />
 </AdminLayout>
 
