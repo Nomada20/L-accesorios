@@ -3,96 +3,12 @@ import AdminLayout from "../../layouts/Admin-Layout.astro";
 
 import { supabase } from "../../db/supabase";
 
-async function getPromociones() {
-  console.log("Fetching promociones...");
-  const { data, error } = await supabase.from("promociones").select("*");
-  if (error) {
-    return [];
-  }
-
-  return data;
-}
-
-const promociones = await getPromociones();
+import ListaPromociones from "../../components/ListaPromociones";
 ---
 
 <AdminLayout>
-  <main>
-    <div class="p-4 sm:ml-64">
-      {
-        promociones.length > 0 ? (
-          promociones.map((promocion) => (
-            <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-              <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
-                    <tr>
-                      <th scope="col" class="px-6 py-5">
-                        ID Promocion
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                        Nombre
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                        Descripcion
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                        Descuento
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                        Valido desde
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                        Valido hasta
-                      </th>
-                      <th scope="col" class="px-6 py-5">
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th
-                        scope="row"
-                        class="px-6 py-4 truncate font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        {promocion.idpromocion}
-                      </th>
-                      <td class="px-6 py-4"> {promocion.nombre} </td>
-                      <td class="px-6 py-4"> {promocion.descripcion} </td>
-                      <td class="px-6 py-4"> {promocion.descuento} </td>
-                      <td class="px-6 py-4"> {promocion.valido_desde} </td>
-                      <td class="px-6 py-4"> {promocion.valido_hasta} </td>
-                      <td class="px-6 py-4">
-                        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={`/promocion/${promocion.idpromocion}`}>Ver</a>
-                        <a class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))
-        ) : (
-          <tr class="bg-white dark:bg-gray-800">
-            <td
-              colspan="4"
-              class="px-6 py-4 text-center text-lg text-gray-500 dark:text-gray-400"
-            >
-              No hay productos disponibles
-            </td>
-          </tr>
-        )
-      }
-    </div>
-  </main>
-
-  <style>
-    .truncate {
-      max-width: 0; /* Esta propiedad es necesaria para activar text-overflow */
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  </style>
+  <ListaPromociones
+      apiUrlMisPromociones="https://api-promociones.vercel.app/API/promocion/get"
+      apiUrlPromocionesCompañeros="https://api-promociones-steel.vercel.app/promociones"
+    />
 </AdminLayout>
