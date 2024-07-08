@@ -24,22 +24,22 @@ const promociones = await getPromociones();
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
                     <tr >
-                      <th scope="col" class="px-7 py-6 border">
-                        ID Promocion
+                      <th scope="col" class="px-10 py-5 border">
+                        IDPromocion
                       </th>
-                      <th scope="col" class="px-7 py-6 border">
+                      <th scope="col" class="px-8 py-5 border">
                         Nombre
                       </th>
-                      <th scope="col" class="px-7 py-6 border">
+                      <th scope="col" class="px-9 py-5 border">
                         Descripcion
                       </th>
-                      <th scope="col" class="px-7 py-6 border">
+                      <th scope="col" class="px-7 py-5 border">
                         Descuento
                       </th>
-                      <th scope="col" class="px-7 py-6 border">
+                      <th scope="col" class="px-7 py-5 border">
                         Valido desde
                       </th>
-                      <th scope="col" class="px-7 py-6 border">
+                      <th scope="col" class="px-7 py-5 border">
                         Valido hasta
                       </th>
                       <th scope="col" class="px-7 py-6 border">
@@ -60,13 +60,13 @@ const promociones = await getPromociones();
                       >
                         {promocion.idpromocion}
                       </th>
-                      <td class="px-6 py-4 border"> {promocion.nombre} </td>
-                      <td class="px-6 py-4 border"> {promocion.descripcion} </td>
-                      <td class="px-6 py-4 border"> {promocion.descuento }%</td>
+                      <td class="px-6 py-1 border"> {promocion.nombre} </td>
+                      <td class="px-6 py-1 border"> {promocion.descripcion} </td>
+                      <td class="px-6 py-1 border"> {promocion.descuento }%</td>
 
-                      <td class="px-6 py-4 border"> {promocion.valido_desde} </td>
-                      <td class="px-6 py-4 border"> {promocion.valido_hasta} </td>
-                      <td class="px-6 py-4 border">
+                      <td class="px-4 py-1 border"> {promocion.valido_desde} </td>
+                      <td class="px-4 py-1 border"> {promocion.valido_hasta} </td>
+                      <td class="px-6 py-1 border">
                         <a class="inline-block m-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/${promocion.idpromocion}`}>Ver</a>
                         <a class="inline-block m-1 w-full bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
                       </td>
