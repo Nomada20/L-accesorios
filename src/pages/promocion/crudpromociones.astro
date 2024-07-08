@@ -59,12 +59,13 @@ const promociones = await getPromociones();
                       </th>
                       <td class="px-6 py-4"> {promocion.nombre} </td>
                       <td class="px-6 py-4"> {promocion.descripcion} </td>
-                      <td class="px-6 py-4"> {promocion.descuento} </td>
+                      <td class="px-6 py-4"> {promocion.descuento }%</td>
+
                       <td class="px-6 py-4"> {promocion.valido_desde} </td>
                       <td class="px-6 py-4"> {promocion.valido_hasta} </td>
                       <td class="px-6 py-4">
-                        <a class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" href={`/promocion/${promocion.idpromocion}`}>Ver</a>
-                        <a class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
+                        <a class="inline-block m-1 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/${promocion.idpromocion}`}>Ver</a>
+                        <a class="inline-block m-1 w-full bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded" href={`/promocion/edit?id=${promocion.idpromocion}`}>Editar</a>
                       </td>
                     </tr>
                          ))
