@@ -1,5 +1,6 @@
 ---
 import AdminLayout from '../../layouts/Admin-Layout.astro';
+import { supabase } from '../lib/supabase';
 
 const idpromocion = Astro.url.searchParams.get('id');
 let promocion = {
@@ -22,7 +23,7 @@ const fetchPromocion = async () => {
     }
     const data = await response.json();
     promocion = {
-      idpromocion : data.idpromocion || 0,
+      idpromocion: data.idpromocion || 0,
       nombre: data.nombre || '',
       descripcion: data.descripcion || '',
       descuento: data.descuento || 0,
@@ -50,8 +51,8 @@ await fetchPromocion();
       ) : (
         <form id="editarPromocionForm" class="space-y-6">
           <div>
-            <label for="nombre" id="idpromocion" class="block text-sm font-medium text-gray-700">idpromocion</label>
-            <input  type="text" value="3" class="field left" readonly value={promocion.idpromocion} class="mt-1 block w-full" />
+            <label for="idpromocion" id="idpromocionLabel" class="block text-sm font-medium text-gray-700">ID Promoción</label>
+            <input type="text" id="idpromocion" readonly value={promocion.idpromocion} class="mt-1 block w-full" />
           </div>
           <div>
             <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
@@ -84,55 +85,33 @@ await fetchPromocion();
   </main>
 
   <script>
-    // Nos aseguramos de que el DOM esté completamente cargado
     document.addEventListener('DOMContentLoaded', () => {
-      // Asignar valores a los campos del formulario
-      document.getElementById('idpromocion').value = promocion.idpromocion;
-      document.getElementById('nombre').value = promocion.nombre;
-      document.getElementById('descripcion').value = promocion.descripcion;
-      document.getElementById('descuento').value = promocion.descuento;
-      document.getElementById('valido_desde').value = promocion.valido_desde;
-      document.getElementById('valido_hasta').value = promocion.valido_hasta;
-      document.getElementById('productos').value = promocion.promociones_productos.map(p => p.idproducto).join(', ');
-
-      // Añadir event listeners a los campos del formulario
-      document.getElementById('nombre').addEventListener('input', handleInput);
-      document.getElementById('descripcion').addEventListener('input', handleInput);
-      document.getElementById('descuento').addEventListener('input', handleInput);
-      document.getElementById('valido_desde').addEventListener('input', handleInput);
-      document.getElementById('valido_hasta').addEventListener('input', handleInput);
-      document.getElementById('productos').addEventListener('input', handleInput);
       document.getElementById('editarPromocionForm').addEventListener('submit', handleSubmit);
     });
-
-    // Definir la variable promocion dentro del script para asegurarse de que esté definida
-    let promocion = {
-      nombre: document.getElementById('nombre')?.value || '',
-      descripcion: document.getElementById('descripcion')?.value || '',
-      descuento: document.getElementById('descuento')?.value || 0,
-      valido_desde: document.getElementById('valido_desde')?.value || '',
-      valido_hasta: document.getElementById('valido_hasta')?.value || '',
-      promociones_productos: document.getElementById('productos')?.value.split(', ').map(id => ({ idproducto: id })) || [],
-    };
-
-    function handleInput(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-
-      promocion[name] = value;
-    }
 
     async function handleSubmit(event) {
       event.preventDefault();
 
+      const idpromocion = document.getElementById('idpromocion').value;
+      const promocion = {
+        nombre: document.getElementById('nombre').value,
+        descripcion: document.getElementById('descripcion').value,
+        descuento: document.getElementById('descuento').value,
+        valido_desde: document.getElementById('valido_desde').value,
+        valido_hasta: document.getElementById('valido_hasta').value,
+        promociones_productos: document.getElementById('productos').value.split(', ').map(id => ({ idproducto: id })),
+      };
+
       try {
-        const response = await fetch(`https://api-promociones.vercel.app/API/promocion/post?id=${idpromocion}`, {
+        const token = localStorage.getItem('supabase.auth.token');
+        const response = await fetch(`https://api-promociones.vercel.app/API/promocion/PUT?id=${idpromocion}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(promocion),
+          mode: 'cors',
         });
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.statusText}`);
