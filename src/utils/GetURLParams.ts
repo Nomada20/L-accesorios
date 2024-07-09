@@ -1,4 +1,7 @@
-export function URLParams(): string | null {
-  const url = new URL(window.location.href);
-  return url.searchParams.get('id');
+export function getPromotionIdFromURL() {
+  if (typeof window !== 'undefined') {
+    const pathSegments = window.location.pathname.split('/');
+    return pathSegments[pathSegments.length - 1];
+  }
+  return null;
 }

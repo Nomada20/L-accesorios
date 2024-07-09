@@ -2,32 +2,71 @@
 import { getProducts } from "../pages/crudproducts.ts";
 
 const productos = await getProducts();
+
+// Fetch promotions data
+const response = await fetch('https://api-promociones.vercel.app/API/promocion/get');
+const promotions = await response.json();
+
+function getDiscountedPrice(product, promotions) {
+  let applicablePromotion = null;
+
+  // Check if there is a promotion applicable to the product
+  for (const promotion of promotions) {
+    if (promotion.promociones_productos.some(p => p.idproducto === product.idproducto)) {
+      applicablePromotion = promotion;
+      break;
+    }
+  }
+
+  if (applicablePromotion) {
+    const originalPrice = product.precio;
+    return originalPrice - (originalPrice * applicablePromotion.descuento / 100);
+  }
+
+  return product.precio;
+}
 ---
 
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-5">
   {productos.length > 0 ? (
-    productos.map((producto) => (
-      <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" >
-        <div class="product-card" data-idproducto={producto.idproducto}>
-          <img class="p-8 rounded-t-lg" src={producto.imagen} alt="product image" />
-        </div>
-        <div class="px-7 pb-5 product-card" data-idproducto={producto.idproducto}>
-          <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {producto.nombre}
-          </h5>
-          <div class="flex items-center justify-items-center content-center  mt-2.5 mb-5">
-            <span class="text-3xl font-bold text-gray-900 dark:text-white">
-              ${producto.precio}
-            </span>
+    productos.map((producto) => {
+      const discountedPrice = getDiscountedPrice(producto, promotions);
+      return (
+        <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div class="product-card" data-idproducto={producto.idproducto}>
+            <img class="p-8 rounded-t-lg" src={producto.imagen} alt="product image" />
           </div>
-        </div>
-        <div class="flex items-end justify-center m-0 mb-2 ">  
-            <div class="flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <div class="px-7 pb-5 product-card" data-idproducto={producto.idproducto}>
+            <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+              {producto.nombre}
+            </h5>
+            <div class="flex flex-col items-center justify-items-center content-center mt-2.5 mb-5">
+              {discountedPrice !== producto.precio ? (
+                <>
+                  <span class="text-lg font-bold text-gray-500 line-through dark:text-gray-400">Precio normal:
+                    {producto.precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
+                  </span>
+                  <span class="text-lg ms-2 font-bold text-red-600 dark:text-red-400">Precio oferta:
+                    {discountedPrice.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
+                  </span>
+                </>
+              ) : (
+                <span class="text-lg font-bold text-gray-900 dark:text-white">
+                  {producto.precio.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}
+                </span>
+              )}
+            </div>
+          </div>
+       
+          </p>
+          <div class="flex items-end justify-center m-0 mb-2">  
+            <div class="flex text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
               Agregar al carrito
             </div>
           </div>
-      </div>
-    ))
+        </div>
+      );
+    })
   ) : (
     <p>No hay productos disponibles</p>
   )}

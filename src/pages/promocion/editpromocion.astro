@@ -1,0 +1,14 @@
+---
+import EditarPromocion from "../../components/EditarPromocion";
+
+const idPromocion = URLSearchParams.get("id");
+---
+
+<div id="root">
+  <EditarPromocion promocionId={idPromocion} />
+</div>
+
+<script>
+  const searchParams = new URLSearchParams(window.location.search);
+  const idPromocion = searchParams.get("id");
+</script>
