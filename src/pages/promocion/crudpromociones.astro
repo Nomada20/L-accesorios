@@ -1,7 +1,6 @@
 ---
 import AdminLayout from "../../layouts/Admin-Layout.astro";
 
-import { supabase } from "../../db/supabase";
 
 
 interface Promocion {
@@ -25,23 +24,7 @@ try {
   console.error("Error al obtener las promociones:", error);
 }
 
-// export async function getUsuarios(updatedUsuarios?: any[]) {
-//  try {
-//    const { data, error } = await supabase.from("promociones").select("*");
 
-//    if (error) {
-//     throw error;
-//   }
-
-//    return data;
-//  } catch (error) {
-//    console.error("Error al obtener usuarios:", error);
-//    return [];
-//  }
-// }
-
-// Obtener datos de usuarios
-// const promociones = await getUsuarios();
 ---
 
 <AdminLayout>
