@@ -1,0 +1,53 @@
+---
+const newProduct = {
+  nombre: '',
+  precio: '',
+  descripcion: '',
+  imagen: '',
+  stock: '',
+  idcategoria: '',
+  idopcion: '',
+  idsucursal: '',
+};
+---
+
+<h1>Agregar Nuevo Producto</h1>
+<form id="addProductForm">
+  <input type="text" id="nombre" placeholder="Nombre" />
+  <input type="text" id="precio" placeholder="Precio" />
+  <textarea id="descripcion" placeholder="Descripción"></textarea>
+  <input type="text" id="imagen" placeholder="Imagen URL" />
+  <input type="text" id="stock" placeholder="Stock" />
+  <input type="text" id="idcategoria" placeholder="ID Categoría" />
+  <input type="text" id="idopcion" placeholder="ID Opción" />
+  <input type="text" id="idsucursal" placeholder="ID Sucursal" />
+  <button type="submit">Agregar Producto</button>
+</form>
+
+<script>
+  document.getElementById('addProductForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newProduct = {
+      nombre: document.getElementById('nombre').value,
+      precio: document.getElementById('precio').value,
+      descripcion: document.getElementById('descripcion').value,
+      imagen: document.getElementById('imagen').value,
+      stock: document.getElementById('stock').value,
+      idcategoria: document.getElementById('idcategoria').value,
+      idopcion: document.getElementById('idopcion').value,
+      idsucursal: document.getElementById('idsucursal').value,
+    };
+
+    const response = await fetch('/api/addProduct', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newProduct),
+    });
+
+    if (response.ok) {
+      window.location.href = '/productos/crudproducts';  // Redirigir a la página principal o donde prefieras
+    } else {
+      alert('Error al agregar el producto');
+    }
+  });
+</script>

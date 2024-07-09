@@ -1,19 +1,7 @@
 import { supabase } from "../db/supabase";
 
 export async function getProducts() {
-    const { data, error } = await supabase
-        .from('producto')
-        .select(`
-            idproducto,
-            nombre,
-            precio,
-            descripcion,
-            imagen,
-            stock,
-            categoria ( idcategoria, nombre ),
-            opcion ( idopcion, nombre ),
-            sucursal ( idsucursal, nombre )
-        `);
+    const { data, error } = await supabase.from("producto").select("*");
 
     if (error) {
         console.error('Error fetching products:', error);
