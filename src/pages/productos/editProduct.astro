@@ -1,0 +1,52 @@
+---
+import { getProductById, updateProduct } from '../crudproduct.ts';
+
+const idproducto = Astro.url.searchParams.get('id');  // Obtener el idproducto de la URL
+const product = await getProductById(idproducto);
+
+const updatedProduct = {
+  nombre: product.nombre,
+  precio: product.precio,
+  descripcion: product.descripcion,
+  imagen: product.imagen,
+  stock: product.stock,
+  idcategoria: product.idcategoria,
+  idopcion: product.idopcion,
+  idsucursal: product.idsucursal,
+};
+---
+
+<h1>Editar Producto</h1>
+<form id="editProductForm">
+  <input type="text" id="nombre" value={updatedProduct.nombre} placeholder="Nombre" />
+  <input type="text" id="precio" value={updatedProduct.precio} placeholder="Precio" />
+  <textarea id="descripcion" placeholder="Descripción">{updatedProduct.descripcion}</textarea>
+  <input type="text" id="imagen" value={updatedProduct.imagen} placeholder="Imagen URL" />
+  <input type="text" id="stock" value={updatedProduct.stock} placeholder="Stock" />
+  <input type="text" id="idcategoria" value={updatedProduct.idcategoria} placeholder="ID Categoría" />
+  <input type="text" id="idopcion" value={updatedProduct.idopcion} placeholder="ID Opción" />
+  <input type="text" id="idsucursal" value={updatedProduct.idsucursal} placeholder="ID Sucursal" />
+  <button type="submit">Actualizar Producto</button>
+</form>
+
+<script>
+  document.getElementById('editProductForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const updatedProduct = {
+      nombre: document.getElementById('nombre').value,
+      precio: document.getElementById('precio').value,
+      descripcion: document.getElementById('descripcion').value,
+      imagen: document.getElementById('imagen').value,
+      stock: document.getElementById('stock').value,
+      idcategoria: document.getElementById('idcategoria').value,
+      idopcion: document.getElementById('idopcion').value,
+      idsucursal: document.getElementById('idsucursal').value,
+    };
+    await fetch(`/api/updateProduct?id=${idproducto}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedProduct),
+    });
+    window.location.href = '/';  // Redirigir a la página principal o donde prefieras
+  });
+</script>
