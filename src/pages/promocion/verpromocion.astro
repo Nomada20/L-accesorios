@@ -1,0 +1,13 @@
+---
+
+import AdminLayout from "../../layouts/Admin-Layout.astro";
+import VerPromocion from "../../components/VerPromocion";
+---
+
+<AdminLayout>
+
+    <div id="root">
+        <VerPromocion client:only="react" />
+      </div>
+
+</AdminLayout>
