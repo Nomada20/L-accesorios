@@ -1,0 +1,98 @@
+---
+import AdminLayout from "../../layouts/Admin-Layout.astro";
+
+import { getProducts } from "../crudproducts.ts";
+
+const productos = await getProducts();
+---
+
+<AdminLayout>
+    <main>
+        <div class="p-4 sm:ml-64">
+            
+                        <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+                            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <thead class="text-xs text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-5 border">
+                                                Nombre
+                                            </th>
+                                            <th scope="col" class="px-3 py-5 border">
+                                                ID Producto
+                                            </th>
+                                            <th scope="col" class="px-2 py-5 border">
+                                                Precio
+                                            </th>
+                                            <th scope="col" class="px-3 py-5 border">
+                                                Categoría
+                                            </th>
+                                            <th scope="col" class="px-2 py-5 border">
+                                                stock
+                                            </th>
+                                            <th scope="col" class="px-3 py-1 border">
+                                                <a href="/productos/addProduct" class="inline-block m-1 w-24 bg-sky-500 hover:bg-sky-700 text-white font-bold p-2 rounded">Agregar</a>
+                                            </th>
+                                        
+                                        </tr>
+                                    </thead>
+
+                                    {
+                                        productos.length > 0 ? (
+                                            productos.map((producto) => (
+                                    <tbody>
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+                                            <th
+                                                scope="row"
+                                                class="px-6 py-4 truncate font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                            >
+                                                {producto.nombre}
+                                            </th>
+                                            <td class="px-6 py-4 border"> {producto.idproducto} </td>
+                                            <td class="px-2 py-4 border">${producto.precio} </td>
+                                            <td class="px-6 py-4 border"> {producto.categoria_fk} </td>
+                                            <td class="px-6 py-4 border"> {producto.stock} </td>
+                                            <td class="px-6 py-1 border">
+                                                <a href={`/productos/editProduct?id=${producto.idproducto}`} class="inline-block m-1 w-full bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded">eliminar</a>
+                                                <a class="delete-button inline-block m-1 w-full bg-green-500 hover:bg-green-700 text-white font-bold p-1 rounded" >Editar</a>
+                                            </td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                       ))
+                ) : (
+                    <tr class="bg-white dark:bg-gray-800">
+                        <td
+                            colspan="4"
+                            class="px-6 py-4 text-center text-lg text-gray-500 dark:text-gray-400"
+                        >
+                            No hay productos disponibles
+                        </td>
+                    </tr>
+                )
+            }
+                                </table>
+                            </div>
+                        </div>
+                 
+        </div>
+        <script>
+            document.querySelectorAll('.delete-button').forEach(button => {
+              button.addEventListener('click', async () => {
+                const idproducto = button.getAttribute('data-id');
+                await fetch(`/api/deleteProduct?id=${idproducto}`, { method: 'DELETE' });
+                window.location.reload();
+              });
+            });
+          </script>
+    </main>
+
+    <style>
+        .truncate {
+    max-width: 10rem; /* Esta propiedad es necesaria para activar text-overflow */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+    </style>
+</AdminLayout>
